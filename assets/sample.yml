@@ -1,0 +1,6 @@
+https://github.com/pietrushnic/workspace.git:
+    link: dotfiles/gitignore $HOME/.gitignore
+    link: dotfiles/bashrc ~/.bashrc
+    mkdir: workspace1
+    upstream: https://github.com/pietrushnic/workspace.git
+    run: echo "Finished"
