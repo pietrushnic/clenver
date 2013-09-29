@@ -1,0 +1,5 @@
+= clenver
+
+Generate this with
+    clenver rdoc
+After you have described your command line interface
