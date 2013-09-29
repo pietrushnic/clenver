@@ -35,11 +35,22 @@ command :init do |c|
   c.action do |global_options,options,args|
 
     # Your command logic here
+
+    puts "args: #{args}"
+    puts "options: #{options}"
+    puts "global_options: #{global_options}"
     unless args.empty?
-      if File.exist?(args.shift.to_s)
-        puts "#{args.shift.to_s} exist"
+      path = args.shift.to_s
+      if File.exist?(path)
+        puts "#{path} exist"
+        begin
+          yaml = Psych.load_file("#{path}")
+          puts yaml
+        rescue Psych::SyntaxError => ex
+          exit_now!("#{path}: syntax error : #{ex.message}", 1)
+        end
       else
-        exit_now!("#{args.shift.to_s} no such file or directory", 2)
+        exit_now!("#{path} no such file or directory", 2)
       end
     else
       exit_now!("pass config file as a clenver init argument", 2)
