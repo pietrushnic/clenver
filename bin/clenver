@@ -35,7 +35,15 @@ command :init do |c|
   c.action do |global_options,options,args|
 
     # Your command logic here
-     
+    unless args.empty?
+      if File.exist?(args.shift.to_s)
+        puts "#{args.shift.to_s} exist"
+      else
+        exit_now!("#{args.shift.to_s} no such file or directory", 2)
+      end
+    else
+      exit_now!("pass config file as a clenver init argument", 2)
+    end
     # If you have any errors, just raise them
     # raise "that command made no sense"
 
