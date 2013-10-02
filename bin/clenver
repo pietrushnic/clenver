@@ -45,7 +45,8 @@ command :init do |c|
         puts "#{path} exist"
         begin
           yaml = Psych.load_file("#{path}")
-          puts yaml
+          p = Project.new(File.basename("#{path}", ".yml"), yaml)
+          p.create_repos
         rescue Psych::SyntaxError => ex
           exit_now!("#{path}: syntax error : #{ex.message}", 1)
         end
