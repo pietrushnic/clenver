@@ -7,11 +7,19 @@ class Project
     @repo_list = nil
   end
 
-  def create_repos
+  def create_repos(dst=nil)
     puts @repos
     @repos.each do |r|
       begin
-        repo = Repository.new(r)
+        if dst
+          path = dst + "/" + @name
+          FileUtils.mkdir_p(path)
+        else
+          path = @name
+          Dir::mkdir(path)
+        end
+        Dir::chdir(path)
+        repo = Repository.new(r, dst)
         repo.clone
       rescue Exception => msg
         puts msg
