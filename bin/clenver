@@ -41,13 +41,20 @@ command :init do |c|
     puts "options: #{options}"
     puts "global_options: #{global_options}"
     unless args.empty?
-      path = args.shift.to_s
+      path = args[0]
+      dst_dist = args[1]
+      puts "path: #{path}"
+      puts "dst_dist: #{dst_dist}"
       if File.exist?(path)
         puts "#{path} exist"
         begin
           yaml = Psych.load_file("#{path}")
           p = Project.new(File.basename("#{path}", ".yml"), yaml)
-          p.create_repos
+          if dst_dist
+            p.create_repos(dst_dist)
+          else
+            p.create_repos()
+          end
         rescue Psych::SyntaxError => ex
           exit_now!("#{path}: syntax error : #{ex.message}", 1)
         end
