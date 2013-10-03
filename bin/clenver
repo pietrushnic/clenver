@@ -66,8 +66,6 @@ command :init do |c|
     end
     # If you have any errors, just raise them
     # raise "that command made no sense"
-
-    puts "init command ran"
   end
 end
 
