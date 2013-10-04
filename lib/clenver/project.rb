@@ -26,4 +26,14 @@ class Project
       end
     end
   end
+
+  def init_repos
+    puts "init_repos"
+    @reps.each do |r|
+      begin
+
+      rescue Exception => msg
+        puts msg
+      end
+  end
 end
