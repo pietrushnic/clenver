@@ -2,7 +2,7 @@
 
 clenver
 =======
-[![Code Climate](https://codeclimate.com/github/pietrushnic/clenver.png)](https://codeclimate.com/github/pietrushnic/clenver)
+[![Build Status](https://travis-ci.org/pietrushnic/clenver.png?branch=master)](https://travis-ci.org/pietrushnic/clenver) [![Code Climate](https://codeclimate.com/github/pietrushnic/clenver.png)](https://codeclimate.com/github/pietrushnic/clenver)
 
 clenver (Command Line home ENVironment mangER) is a Ruby gem that bootstrap and manage your shell environment. 
 
