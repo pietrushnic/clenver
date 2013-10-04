@@ -41,6 +41,7 @@ PLATFORMS
 DEPENDENCIES
   aruba
   clenver!
+  cucumber
   git
   gli
   rake
