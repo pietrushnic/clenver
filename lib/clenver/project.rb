@@ -1,4 +1,5 @@
 require 'clenver/repository'
+require 'clenver/link'
 
 class Project
   def initialize(name, repos)
