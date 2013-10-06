@@ -43,7 +43,17 @@ Feature: Initialization
     Then the following files should exist:
       | test_repo/dummy/README.md |
 
-  Scenario: Init simpe project to given directory
+  Scenario: Init simple project (repo w/o colon)
+    Given The default aruba timeout is 10 seconds
+    Given a file named "test_repo.yml" with:
+    """
+    https://github.com/pietrushnic/dummy.git
+    """
+    When I run `clenver init test_repo.yml`
+    Then the following files should exist:
+      | test_repo/dummy/README.md |
+
+  Scenario: Init simple project to given directory
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
     """
