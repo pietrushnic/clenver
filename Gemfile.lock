@@ -44,3 +44,4 @@ DEPENDENCIES
   clenver!
   rake
   rdoc
+  rspec-expectations
