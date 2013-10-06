@@ -29,9 +29,29 @@ class Project
 
   def init_repos
     puts "init_repos"
-    @reps.each do |r|
+    case @repos
+    when Hash
+      @repos.each do |uri, content|
+        puts "uri:#{uri}, content:#{content}"
+        begin
+          unless content.nil?
+            #links
+            content['links'].each do |s,d|
+              s_path = content['object'].get_abs_path + "/" + s
+              Link.new(s_path,d).create
+            end
+          end
+        rescue Exception => msg
+          puts msg
+        end
+      end
+    when String
       begin
-
+        unless @respo.nil?
+          @repos['links'].each do |s,d|
+            Link.new(s,d).create
+          end
+        end
       rescue Exception => msg
         puts msg
       end
