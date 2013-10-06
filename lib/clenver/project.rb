@@ -55,9 +55,19 @@ class Project
         begin
           unless content.nil?
             #links
-            content['links'].each do |s,d|
-              s_path = content['object'].get_abs_path + "/" + s
-              Link.new(s_path,d).create
+            unless content['links'].nil?
+              content['links'].each do |s,d|
+                s_path = content['object'].get_abs_path + "/" + s
+                Link.new(s_path,d).create
+              end
+            end
+            #remotes
+            unless content['remotes'].nil?
+              content['remotes'].each do |name, uri|
+                Dir::chdir(content['object'].get_abs_path)
+                puts "pwd: #{Dir::pwd}"
+                content['object'].add_remote(name, uri)
+              end
             end
           end
         rescue Exception => msg
