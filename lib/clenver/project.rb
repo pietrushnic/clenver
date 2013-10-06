@@ -9,18 +9,32 @@ class Project
   end
 
   def create_repos(dst=nil)
-    puts @repos
-    @repos.each do |r|
-      begin
-        if dst
-          path = dst + "/" + @name
-          FileUtils.mkdir_p(path)
-        else
-          path = @name
-          Dir::mkdir(path)
+    puts "create_repos:"
+    if dst
+      path = self.get_abs_path + "/../" + dst.to_s + "/" + @name
+      puts path
+      FileUtils.mkdir_p(path)
+    else
+      path = get_abs_path
+      Dir::mkdir(path)
+    end
+    Dir::chdir(path)
+    case @repos
+    when Hash
+      @repos.each do |uri, content|
+        puts "uri:#{uri}, content:#{content}"
+        #TODO: verify if r is a supported repo
+        begin
+          r = Repository.new(uri, dst)
+          r.clone
+          @repos[uri]['object'] = r
+        rescue Exception => msg
+          puts msg
         end
-        Dir::chdir(path)
-        repo = Repository.new(r, dst)
+      end
+    when String
+      begin
+        repo = Repository.new(@repos, dst)
         repo.clone
       rescue Exception => msg
         puts msg
