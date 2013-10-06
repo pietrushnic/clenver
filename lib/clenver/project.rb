@@ -66,7 +66,7 @@ class Project
       end
     when String
       begin
-        unless @respo.nil?
+        unless @repos.nil?
           @repos['links'].each do |s,d|
             Link.new(s,d).create
           end
