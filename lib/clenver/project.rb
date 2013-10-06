@@ -5,7 +5,11 @@ class Project
   def initialize(name, repos)
     @name = name
     @repos = repos
-    @repo_list = nil
+    @abs_path = Dir::pwd + "/" + @name
+  end
+
+  def get_abs_path
+    @abs_path
   end
 
   def create_repos(dst=nil)
