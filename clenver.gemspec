@@ -3,11 +3,11 @@ require File.join([File.dirname(__FILE__),'lib','clenver','version.rb'])
 spec = Gem::Specification.new do |s| 
   s.name = 'clenver'
   s.version = Clenver::VERSION
-  s.author = 'Your Name Here'
-  s.email = 'your@email.address.com'
-  s.homepage = 'http://your.website.com'
+  s.author = 'Piotr Król'
+  s.email = 'pietrushnic@gmail.com'
+  s.homepage = 'http://pietrushnic.github.io'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'A description of your project'
+  s.summary = 'Command line home directory manager'
 # Add your other files here if you make them
   s.files = %w(
 bin/clenver
