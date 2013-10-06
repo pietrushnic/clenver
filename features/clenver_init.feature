@@ -63,7 +63,7 @@ Feature: Initialization
     Then the following files should exist:
       | some_tmp/test_repo/dummy/README.md |
 
-  Scenario: Init project with symbolic links
+   Scenario: Init project with symbolic links
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
     """
