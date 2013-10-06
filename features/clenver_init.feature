@@ -7,14 +7,15 @@ Feature: Initialization
     Then the exit status should be 2
 
   Scenario: Valid config file given
+    Given The default aruba timeout is 10 seconds
     Given a file named "valid.yml" with:
     """
-    Lorem:
-    ipsum:
-    dolor: sit amet,
-    consectetur adipisicing elit, sed: do eiusmod tempor
-    incididunt: ut
-    labore et dolore: magna aliqua.
+    https://github.com/pietrushnic/dummy.git:
+      links:
+        foobar.txt:
+        - foobar_link
+        foobar:
+        - foobar_dir_link
     """
     When I run `clenver init valid.yml`
     Then the exit status should be 0
@@ -32,7 +33,7 @@ Feature: Initialization
     When I run `clenver init invalid.yml`
     Then the exit status should be 1
 
-  Scenario: Init simpe project
+  Scenario: Init simple project (repo w/ colon)
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
     """
