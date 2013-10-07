@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    clenver (0.0.1)
+    clenver (0.1.0)
       git (= 1.2.6)
       gli (= 2.8.0)
 
