@@ -26,7 +26,6 @@ class Project
     case @repos
     when Hash
       @repos.each do |uri, content|
-        puts "uri:#{uri}, content:#{content}"
         #TODO: verify if r is a supported repo
         begin
           r = Repository.new(uri, dst)
@@ -51,7 +50,6 @@ class Project
     case @repos
     when Hash
       @repos.each do |uri, content|
-        puts "uri:#{uri}, content:#{content}"
         begin
           unless content.nil?
             #links
@@ -65,8 +63,14 @@ class Project
             unless content['remotes'].nil?
               content['remotes'].each do |name, uri|
                 Dir::chdir(content['object'].get_abs_path)
-                puts "pwd: #{Dir::pwd}"
                 content['object'].add_remote(name, uri)
+              end
+            end
+            #run
+            unless content['run'].nil?
+              content['run'].each do |cmd|
+                Dir::chdir(content['object'].get_abs_path)
+                puts %x[#{cmd}]
               end
             end
           end
