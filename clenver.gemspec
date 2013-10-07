@@ -5,9 +5,11 @@ spec = Gem::Specification.new do |s|
   s.version = Clenver::VERSION
   s.author = 'Piotr Król'
   s.email = 'pietrushnic@gmail.com'
-  s.homepage = 'http://pietrushnic.github.io'
+  s.homepage = 'https://github.com/pietrushnic/clenver'
   s.platform = Gem::Platform::RUBY
   s.summary = 'Command line home directory manager'
+  s.license = 'GPLv2'
+  s.description = 'clenver aims to shorten time of configuring your brand new *NIX account to fully featured development envionment of your choice'
 # Add your other files here if you make them
   s.files = %w(
 bin/clenver
