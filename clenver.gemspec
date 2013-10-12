@@ -14,6 +14,10 @@ spec = Gem::Specification.new do |s|
   s.files = %w(
 bin/clenver
 lib/clenver/version.rb
+lib/clenver/project.rb
+lib/clenver/repository.rb
+lib/clenver/link.rb
+lib/clenver/assets/sample.yml
 lib/clenver.rb
   )
   s.require_paths << 'lib'
