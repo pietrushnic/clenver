@@ -79,6 +79,20 @@ Feature: Initialization
       | some_tmp/test_repo/foobar_link     |
       | some_tmp/test_repo/foobar_dir_link |
 
+   @announce
+   Scenario: use system variable in path
+    Given The default aruba timeout is 10 seconds
+    Given a file named "test_repo.yml" with:
+    """
+    https://github.com/pietrushnic/dummy.git:
+      links:
+        $HOME/foobar.txt:
+        - $HOME/foobar_link
+    """
+    When I run `clenver init test_repo.yml some_tmp`
+    Then the following links should exist:
+      | $HOME/foobar_link     |
+
   Scenario: Connect remote and check uri
     Given The default aruba timeout is 25 seconds
     Given a file named "test_repo.yml" with:
