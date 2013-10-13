@@ -1,4 +1,5 @@
 require 'rspec/expectations'
+require 'clenver/link'
 
 When /^I get help for "([^"]*)"$/ do |app_name|
   @app_name = app_name
@@ -9,7 +10,14 @@ end
 
 Then(/^the following links should exist:$/) do |files|
   files.raw.map{|file_row| file_row[0]}.each do |f|
-    File.should be_symlink("tmp/aruba/" + f)
+    puts f
+    if /\$\w+/.match(f)
+      f_path = Link.new(f,"").expand_dst(Array.new().push(f))[0]
+    elsif
+      f_path = "tmp/aruba/" + f
+    end
+    puts f_path
+    File.should be_symlink(f_path)
   end
 end
 
