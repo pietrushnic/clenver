@@ -119,7 +119,6 @@ Feature: Initialization
     Then the following remote branches should be connected in "some_tmp/test_repo/spf13-vim":
       | upstream |
 
-  @announce
   Scenario: run simple command
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
