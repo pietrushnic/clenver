@@ -55,7 +55,13 @@ class Project
             #links
             unless content['links'].nil?
               content['links'].each do |s,d|
-                s_path = content['object'].get_abs_path + "/" + s
+                if /\$\w+/.match(s)
+                  #TODO: this is ugly and should be fixed
+                  buf = Array.new().push(s)
+                  s_path = Link.new(s,d).expand_dst(buf)[0]
+                elsif
+                  s_path = content['object'].get_abs_path + "/" + s
+                end
                 Link.new(s_path,d).create
               end
             end
