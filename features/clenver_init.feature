@@ -79,7 +79,6 @@ Feature: Initialization
       | some_tmp/test_repo/foobar_link     |
       | some_tmp/test_repo/foobar_dir_link |
 
-   @announce
    Scenario: use system variable in path
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
