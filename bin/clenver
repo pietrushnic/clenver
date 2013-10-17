@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 require 'gli'
+require 'clenver/logging'
 begin # XXX: Remove this begin/rescue before distributing your app
   require 'clenver'
-  require 'clenver/project'
+  require 'clenver/runner'
 rescue LoadError
   STDERR.puts "In development, you need to use `bundle exec bin/clenver` to run your app"
   STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
@@ -43,22 +44,7 @@ command :init do |c|
     unless args.empty?
       path = args[0]
       dst_dist = args[1]
-      if File.exist?(path)
-        begin
-          yaml = Psych.load_file("#{path}")
-          p = Project.new(File.basename("#{path}", ".yml"), yaml)
-          if dst_dist
-            p.create_repos(dst_dist)
-          else
-            p.create_repos()
-          end
-          p.init_repos
-        rescue Psych::SyntaxError => ex
-          exit_now!("#{path}: syntax error : #{ex.message}", 1)
-        end
-      else
-        exit_now!("#{path} no such file or directory", 2)
-      end
+      Clenver::Runner.new(path, dst_dist).start
     else
       exit_now!("pass config file as a clenver init argument", 2)
     end
