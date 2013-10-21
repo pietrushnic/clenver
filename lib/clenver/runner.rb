@@ -19,7 +19,7 @@ module Clenver
           #TODO: create test and fix this place with check for empty file
           p = Project.new(File.basename("#{@path}", ".yml"), yaml, @dst)
           p.create_repos
-          p.init_repos
+          p.init_project
         rescue Psych::SyntaxError => ex
           exit_now!("#{@path}: syntax error : #{ex.message}", 1)
         end

@@ -51,46 +51,74 @@ class Project
     logger.debug("init_project:")
     case @repos
     when Hash
-      @repos.each do |uri, content|
-        begin
-          unless content.nil?
-            #links
-            unless content['links'].nil?
-              content['links'].each do |s,d|
-                if /\$\w+/.match(s)
-                  #TODO: this is ugly and should be fixed
-                  buf = Array.new().push(s)
-                  s_path = Link.new(s,d).expand_dst(buf)[0]
-                elsif
-                  s_path = content['object'].get_abs_path + "/" + s
-                end
-                Link.new(s_path,d).create
-              end
-            end
-            #remotes
-            unless content['remotes'].nil?
-              content['remotes'].each do |name, uri|
-                Dir::chdir(content['object'].get_abs_path)
-                content['object'].add_remote(name, uri)
-              end
-            end
-            #run
-            unless content['run'].nil?
-              content['run'].each do |cmd|
-                Dir::chdir(content['object'].get_abs_path)
-                puts %x[#{cmd}]
-              end
-            end
-          end
-        rescue Exception => msg
-          puts msg
-        end
-      end
+      init_links
+      init_repos
+      init_runs
     when String
       begin
         unless @repos.nil?
           @repos['links'].each do |s,d|
             Link.new(s,d).create
+          end
+        end
+      rescue Exception => msg
+        puts msg
+      end
+    end
+  end
+
+  def init_links
+    @repos.each do |uri, content|
+      begin
+        unless content.nil?
+          #links
+          unless content['links'].nil?
+            content['links'].each do |s,d|
+              if /\$\w+/.match(s)
+                #TODO: this is ugly and should be fixed
+                buf = Array.new().push(s)
+                s_path = Link.new(s,d).expand_dst(buf)[0]
+              elsif
+                s_path = content['object'].get_abs_path + "/" + s
+              end
+              Link.new(s_path,d).create
+            end
+          end
+        end
+      rescue Exception => msg
+        puts msg
+      end
+    end
+  end
+
+  def init_repos
+    @repos.each do |uri, content|
+      begin
+        unless content.nil?
+          #remotes
+          unless content['remotes'].nil?
+            content['remotes'].each do |name, uri|
+              Dir::chdir(content['object'].get_abs_path)
+              content['object'].add_remote(name, uri)
+            end
+          end
+        end
+      rescue Exception => msg
+        puts msg
+      end
+    end
+  end
+
+  def init_runs
+    @repos.each do |uri, content|
+      begin
+        unless content.nil?
+          #run
+          unless content['run'].nil?
+            content['run'].each do |cmd|
+              Dir::chdir(content['object'].get_abs_path)
+              puts %x[#{cmd}]
+            end
           end
         end
       rescue Exception => msg
