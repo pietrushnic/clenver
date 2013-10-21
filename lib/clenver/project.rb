@@ -2,6 +2,7 @@ require 'clenver/repository'
 require 'clenver/link'
 
 class Project
+  include Logging
   attr_accessor :name, :repos, :dst, :abs_path
   def initialize(name, repos, dst)
     @name = name
@@ -22,7 +23,7 @@ class Project
   end
 
   def create_repos(dst=nil)
-    puts "create_repos:"
+    logger.debug("create_repos:")
     goto_dst
     case @repos
     when Hash
@@ -46,8 +47,8 @@ class Project
     end
   end
 
-  def init_repos
-    puts "init_repos"
+  def init_project
+    logger.debug("init_project:")
     case @repos
     when Hash
       @repos.each do |uri, content|
