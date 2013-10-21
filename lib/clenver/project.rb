@@ -2,9 +2,11 @@ require 'clenver/repository'
 require 'clenver/link'
 
 class Project
-  def initialize(name, repos)
+  attr_accessor :name, :repos, :dst, :abs_path
+  def initialize(name, repos, dst)
     @name = name
     @repos = repos
+    @dst = dst
     @abs_path = Dir::pwd + "/" + @name
   end
 
@@ -19,7 +21,7 @@ class Project
       puts path
       FileUtils.mkdir_p(path)
     else
-      path = get_abs_path
+      path = @abs_path
       Dir::mkdir(path)
     end
     Dir::chdir(path)
