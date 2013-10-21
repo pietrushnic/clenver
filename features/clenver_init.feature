@@ -127,4 +127,4 @@ Feature: Initialization
         - echo "success!!!!"
     """
     When I run `clenver init test_repo.yml some_tmp`
-    Then the output should contain "success!!!!"
+    Then the output should contain "success!!!!\n"
