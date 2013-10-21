@@ -10,21 +10,20 @@ class Project
     @abs_path = Dir::pwd + "/" + @name
   end
 
-  def get_abs_path
-    @abs_path
-  end
-
-  def create_repos(dst=nil)
-    puts "create_repos:"
-    if dst
-      path = self.get_abs_path + "/../" + dst.to_s + "/" + @name
-      puts path
+  def goto_dst
+    if @dst
+      path = @abs_path + "/../" + @dst + "/" + @name
       FileUtils.mkdir_p(path)
     else
       path = @abs_path
       Dir::mkdir(path)
     end
     Dir::chdir(path)
+  end
+
+  def create_repos(dst=nil)
+    puts "create_repos:"
+    goto_dst
     case @repos
     when Hash
       @repos.each do |uri, content|
