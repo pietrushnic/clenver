@@ -17,6 +17,7 @@ lib/clenver/version.rb
 lib/clenver/project.rb
 lib/clenver/repository.rb
 lib/clenver/link.rb
+lib/clenver/runner.rb
 lib/clenver/logging.rb
 lib/clenver/assets/sample.yml
 lib/clenver.rb
