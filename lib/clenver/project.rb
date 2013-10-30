@@ -1,5 +1,6 @@
 require 'clenver/repository'
 require 'clenver/link'
+require 'clenver/logging'
 
 class Project
   include Logging
