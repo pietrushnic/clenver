@@ -1,4 +1,5 @@
 require 'gli'
+require 'clenver'
 require 'clenver/project'
 require 'clenver/logging'
 
