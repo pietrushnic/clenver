@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 require 'gli'
-require 'clenver/logging'
 begin # XXX: Remove this begin/rescue before distributing your app
   require 'clenver'
   require 'clenver/runner'
+  require 'clenver/logging'
 rescue LoadError
   STDERR.puts "In development, you need to use `bundle exec bin/clenver` to run your app"
   STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
