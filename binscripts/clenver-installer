@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-sudo apt-get -y install curl
+sudo apt-get -y install curl git
 curl -L https://get.rvm.io | bash -s stable --ruby
 source $HOME/.rvm/scripts/rvm
 rvm use ruby
