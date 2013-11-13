@@ -24,6 +24,10 @@ startvm() {
     vboxmanage startvm $1 # -type headless
 }
 
+ssh_cmd () {
+    ssh -oStrictHostKeyChecking=no user@localhost -p 2222 $1
+}
+
 no_pass_ssh () {
     startvm $1
     sleep 3
