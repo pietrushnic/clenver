@@ -48,8 +48,8 @@ clenver_install() {
 	 echo $line
       done
     else
-        ssh -oStrictHostKeyChecking=no user@localhost -p 2222 'wget -O - bit.ly/1hASabs|bash'
-        ssh -oStrictHostKeyChecking=no user@localhost -p 2222 'bash -l -c "clenver"'
+        ssh_cmd 'wget -O - bit.ly/1hASabs|bash'
+        ssh_cmd 'bash -l -c "clenver"'
     fi
 }
 
