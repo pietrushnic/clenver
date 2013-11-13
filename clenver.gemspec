@@ -11,17 +11,9 @@ spec = Gem::Specification.new do |s|
   s.license = 'GPLv2'
   s.description = 'clenver aims to shorten time of configuring your brand new *NIX account to fully featured development envionment of your choice'
 # Add your other files here if you make them
-  s.files = %w(
-bin/clenver
-lib/clenver/version.rb
-lib/clenver/project.rb
-lib/clenver/repository.rb
-lib/clenver/link.rb
-lib/clenver/runner.rb
-lib/clenver/logging.rb
-lib/clenver/assets/sample.yml
-lib/clenver.rb
-  )
+  s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths << 'lib'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.rdoc','clenver.rdoc']
