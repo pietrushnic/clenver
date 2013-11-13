@@ -38,14 +38,14 @@ no_pass_ssh () {
 }
 
 clenver_install() {
-    #no_pass_ssh $1
+    no_pass_ssh $1
     if [[ $# -ge 2 ]]; then
        cat $2 | while read line; do
 	 echo $line
       done
     else
         ssh -oStrictHostKeyChecking=no user@localhost -p 2222 'wget -O - bit.ly/1hASabs|bash'
-        ssh -oStrictHostKeyChecking=no user@localhost -p 2222 'clenver'
+        ssh -oStrictHostKeyChecking=no user@localhost -p 2222 'bash -l -c "clenver"'
     fi
 }
 
