@@ -34,3 +34,6 @@ st_pt=' > $HOME/.ssh/authorized_keys'
 nd_pt="echo $pub_key"
 echo "$nd_pt$st_pt"
 sc_send $1 "$nd_pt$st_pt"
+ssh -oStrictHostKeyChecking=no user@localhost -p 2222 'wget -O - bit.ly/1hASabs|bash'
+ssh -oStrictHostKeyChecking=no user@localhost -p 2222 'clenver'
+
