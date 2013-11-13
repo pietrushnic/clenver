@@ -128,3 +128,27 @@ Feature: Initialization
     """
     When I run `clenver init test_repo.yml some_tmp`
     Then the output should contain "success!!!!\n"
+
+  Scenario: apt: check if package installed
+    Given The default aruba timeout is 10 seconds
+    Given a file named "test_repo.yml" with:
+    """
+    apt:
+      - vim
+    """
+    When I run `clenver init test_repo.yml some_tmp`
+    Then the output should contain "vim is already the newest version.\n"
+  @wip
+  Scenario: package installed and simple command run
+    Given The default aruba timeout is 10 seconds
+    Given a file named "test_repo.yml" with:
+    """
+    apt:
+      - vim
+    https://github.com/pietrushnic/dummy.git:
+      run:
+        - echo "success!!!!"
+    """
+    When I run `clenver init test_repo.yml some_tmp`
+    Then the output should contain "vim is already the newest version.\n"
+    Then the output should contain "success!!!!\n"
