@@ -53,4 +53,11 @@ clenver_install() {
     fi
 }
 
+init_general () {
+   clenver_install $1
+   #ssh_cmd 'bash -l -c "clenver init http://bit.ly/1cpqEqp"'
+   ssh_cmd 'git clone https://github.com/pietrushnic/clenver_projects.git src/clenver_projects'
+   ssh_cmd 'bash -l -c "clenver init src/clenver_projects/general.yml"'
+}
+
 eval "$@"
