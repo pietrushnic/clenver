@@ -2,6 +2,7 @@ require 'gli'
 require 'clenver'
 require 'clenver/project'
 require 'clenver/logging'
+require 'clenver/package_manager'
 
 module Clenver
   class Runner
@@ -19,6 +20,14 @@ module Clenver
           logger.debug("yaml: #{yaml}")
           #TODO: create test and fix this place with check for empty file
           p = Project.new(File.basename("#{@path}", ".yml"), yaml, @dst)
+          unless yaml['apt'].nil?
+            for pkg in yaml['apt'] do
+              pkgs = pkg + " "
+            end
+            puts pkgs
+            p_mgr = PackageManger.new('apt', pkgs)
+            p_mgr.install()
+          end
           p.create_repos
           p.init_project
         rescue Psych::SyntaxError => ex
