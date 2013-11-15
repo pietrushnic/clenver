@@ -30,6 +30,9 @@ class Project
     when Hash
       @repos.each do |uri, content|
         #TODO: verify if r is a supported repo
+        if uri == 'apt' or uri == 'gem'
+          next
+        end
         begin
           r = Repository.new(uri, dst)
           r.clone

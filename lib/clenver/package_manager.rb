@@ -5,7 +5,12 @@ class PackageManger
   end
 
   def install()
-    out = %x[sudo apt-get install #{@pkgs}]
+    case @name
+    when 'apt'
+      out = %x[sudo apt-get install #{@pkgs}]
+    when 'gem'
+      out = %x[gem install #{@pkgs}]
+    end
     puts out
   end
 
