@@ -28,6 +28,14 @@ ssh_cmd () {
     ssh -oStrictHostKeyChecking=no user@localhost -p 2222 $1
 }
 
+scp_cmd () {
+    scp -P 2222 -oStrictHostKeyChecking=no $1 user@localhost:$2
+}
+
+bash_cmd () {
+    ssh_cmd "bash -l -c $1"
+}
+
 no_pass_ssh () {
     startvm $1
     sleep 3
