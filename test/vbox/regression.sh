@@ -52,9 +52,9 @@ no_pass_ssh () {
 clenver_install() {
     no_pass_ssh $1
     if [[ $# -ge 2 ]]; then
-       cat $2 | while read line; do
-	 echo $line
-      done
+        cat $2 | while read line; do
+            sc_send $1 "$line"
+        done
     else
         ssh_cmd 'wget -O - bit.ly/1hASabs|bash'
         ssh_cmd 'bash -l -c "clenver"'
