@@ -68,4 +68,14 @@ init_general () {
    ssh_cmd 'bash -l -c "clenver init src/clenver_projects/general.yml"'
 }
 
+init_custom () {
+    no_pass_ssh $1
+    scp_cmd $2 /home/user
+    home_v='$HOME'
+    nd_pt="/${2##*/}"
+    bash_cmd "$home_v$nd_pt"
+    ssh_cmd "git clone https://github.com/pietrushnic/clenver_projects.git src/clenver_projects"
+    bash_cmd "clenver init $home_v/src/clenver_projects/general.yml"
+}
+
 eval "$@"
