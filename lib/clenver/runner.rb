@@ -20,14 +20,15 @@ module Clenver
           logger.debug("yaml: #{yaml}")
           #TODO: create test and fix this place with check for empty file
           p = Project.new(File.basename("#{@path}", ".yml"), yaml, @dst)
-          if not yaml['apt'].nil?
+          unless yaml['apt'].nil?
             for pkg in yaml['apt'] do
               pkgs = pkg + " "
             end
             puts pkgs
             p_mgr = PackageManger.new('apt', pkgs)
             p_mgr.install()
-          elsif not yaml['gem'].nil?
+          end
+          unless yaml['gem'].nil?
             for pkg in yaml['gem'] do
               pkgs = pkg + " "
             end
