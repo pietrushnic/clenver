@@ -7,7 +7,7 @@ class PackageManger
   def install()
     case @name
     when 'apt'
-      out = %x[sudo apt-get install #{@pkgs}]
+      out = %x[sudo apt-get -y install #{@pkgs}]
     when 'gem'
       out = %x[gem install #{@pkgs}]
     end
