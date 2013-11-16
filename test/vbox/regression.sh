@@ -79,6 +79,12 @@ init_custom () {
     scp_cmd $2 /home/user
     home_v='$HOME'
     nd_pt="/${2##*/}"
+    # use local gem
+    if [[ $# -ge 3 ]]; then
+        scp_cmd $3 /home/user
+        nd_pt="$nd_pt $3"
+        echo "nd_pt: $nd_pt"
+    fi
     bash_cmd "$home_v$nd_pt"
     ssh_cmd "git clone https://github.com/pietrushnic/clenver_projects.git src/clenver_projects"
     bash_cmd "clenver init $home_v/src/clenver_projects/general.yml"
