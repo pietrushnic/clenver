@@ -1,4 +1,7 @@
+require 'fileutils'
+
 class Link
+  MAX_REPEAT = 3
   def initialize(src,dst)
     @src = src
     @dst = expand_dst(dst)
@@ -9,8 +12,17 @@ class Link
     @dst.each do |d|
       puts "src:#{@src}"
       puts "d:#{d} "
-
-      File.symlink(@src, d.to_s)
+      i = 0
+      while i < MAX_REPEAT do
+        begin
+          File.symlink(@src, d.to_s)
+        rescue SystemCallError => e
+          FileUtils.mv(d.to_s, d.to_s + "_old")
+        else
+          break
+        end
+        i += 1
+      end
     end
   end
   def expand_dst(dst)
