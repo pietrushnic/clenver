@@ -79,6 +79,26 @@ Feature: Initialization
       | some_tmp/test_repo/foobar_link     |
       | some_tmp/test_repo/foobar_dir_link |
 
+   @wip
+   @announce
+   Scenario: files backup verification
+    Given The default aruba timeout is 10 seconds
+    Given a file named "test_repo.yml" with:
+    """
+    https://github.com/pietrushnic/dummy.git:
+      links:
+        foobar.txt:
+        - foobar_link
+        - foobar_link
+        foobar:
+        - foobar_dir_link
+    """
+    When I run `clenver init test_repo.yml some_tmp`
+    Then the following links should exist:
+      | some_tmp/test_repo/foobar_link     |
+      | some_tmp/test_repo/foobar_link_old |
+      | some_tmp/test_repo/foobar_dir_link |
+
    Scenario: use system variable in path
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
@@ -166,7 +186,7 @@ Feature: Initialization
     When I run `clenver init test_repo.yml some_tmp`
     Then the output should contain "installed\n"
     Then the output should contain "success!!!!\n"
-  @wip
+
   Scenario: install gems and packages
     Given The default aruba timeout is 120 seconds
     Given a file named "test_repo.yml" with:
