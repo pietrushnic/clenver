@@ -16,7 +16,7 @@ class Link
       while i < MAX_REPEAT do
         begin
           File.symlink(@src, d.to_s)
-        rescue SystemCallError => e
+        rescue SystemCallError
           FileUtils.mv(d.to_s, d.to_s + "_old")
         else
           break
