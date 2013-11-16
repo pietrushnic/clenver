@@ -35,7 +35,11 @@ scp_cmd () {
 }
 
 bash_cmd () {
-    ssh_cmd "bash -l -c $1"
+    st="bash -l -c '"
+    nd="$1"
+    rd="'"
+    echo "bash_cmd: $st$nd$rd"
+    ssh_cmd "$st$nd$rd"
 }
 
 no_pass_ssh () {
