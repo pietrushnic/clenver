@@ -25,10 +25,12 @@ startvm() {
 }
 
 ssh_cmd () {
+    echo "ssh_cmd: $1"
     ssh -oStrictHostKeyChecking=no user@localhost -p 2222 $1
 }
 
 scp_cmd () {
+    echo "scp_cmd: $1 $2"
     scp -P 2222 -oStrictHostKeyChecking=no $1 user@localhost:$2
 }
 
