@@ -46,7 +46,7 @@ no_pass_ssh () {
     startvm $1
     sleep 3
     vboxmanage controlvm $1 keyboardputscancode 1C 9C
-    sleep 45
+    sleep 60
     # cat host pub key to guest .ssh/authorized_keys
     sc_send $1 'mkdir -p $HOME/.ssh'
     st_pt=' > $HOME/.ssh/authorized_keys'
