@@ -147,6 +147,7 @@ Feature: Initialization
     When I run `clenver init test_repo.yml some_tmp`
     Then the output should contain "success!!!!\n"
 
+  @ignore
   Scenario: apt: check if package installed
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
@@ -157,6 +158,7 @@ Feature: Initialization
     When I run `clenver init test_repo.yml some_tmp`
     Then the output should contain "vim is already the newest version.\n"
 
+  @ignore
   Scenario: package installed and simple command run
     Given The default aruba timeout is 10 seconds
     Given a file named "test_repo.yml" with:
@@ -185,7 +187,7 @@ Feature: Initialization
     Then the output should contain "installed\n"
     Then the output should contain "success!!!!\n"
 
-  @wip
+  @ignore
   Scenario: install gems and packages
     Given The default aruba timeout is 120 seconds
     Given a file named "test_repo.yml" with:
