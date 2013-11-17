@@ -20,6 +20,7 @@ desc 'Run features'
 Cucumber::Rake::Task.new(:features) do |t|
   opts = "features --format html -o #{CUKE_RESULTS} --format progress -x"
   opts += " --tags #{ENV['TAGS']}" if ENV['TAGS']
+  opts += " --tags ~@sudo"
   t.cucumber_opts =  opts
   t.fork = false
 end
@@ -32,8 +33,17 @@ Cucumber::Rake::Task.new('features:wip') do |t|
   t.fork = false
 end
 
+desc 'Run features tagged as sudo (@sudo)'
+Cucumber::Rake::Task.new('features:sudo') do |t|
+  tag_opts = ' --tags ~@pending'
+  tag_opts = ' --tags @sudo'
+  t.cucumber_opts = "features --format html -o #{CUKE_RESULTS} --format pretty -x -s#{tag_opts}"
+  t.fork = false
+end
+
 task :cucumber => :features
 task 'cucumber:wip' => 'features:wip'
+task 'cucumber:sudo' => 'features:sudo'
 task :wip => 'features:wip'
 require 'rake/testtask'
 Rake::TestTask.new do |t|
