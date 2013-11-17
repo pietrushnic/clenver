@@ -22,8 +22,22 @@ module Clenver
 
     default_task :help
 
-    def help
-      puts "this is help"
+    def help(cli = nil)
+      logger.error("Not implemented")
+    end
+
+    desc "init [FILE]", "initialize $HOME directory according to instructions in FILE"
+    def init(config, dst = nil)
+      if File.exist?(config)
+        Clenver::Runner.new(config, dst).start
+      else
+        exit 2
+      end
+    end
+
+    desc "version", "Prints the clenver's version information" 
+    def version
+      logger.info("Clenver version #{Clenver::VERSION}")
     end
   end
 end
