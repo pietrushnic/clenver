@@ -90,4 +90,11 @@ init_custom () {
     bash_cmd "clenver init $home_v/src/clenver_projects/general.yml"
 }
 
+init_file () {
+    # assume that vm is running
+    scp_cmd $1 /home/user
+    home_v='$HOME'
+    nd_pt="/${1##*/}"
+    bash_cmd "clenver init $home_v$nd_pt"
+}
 eval "$@"
