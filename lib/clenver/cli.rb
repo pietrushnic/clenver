@@ -10,10 +10,6 @@ module Clenver
     include Logging
     def self.start(*)
       super
-      # logger.debug("args: #{args}")
-      # path = args[0]
-      # dst_dist = args[1]
-      # Clenver::Runner.new(path, dst_dist).start
     end
 
     def initialize(*)
