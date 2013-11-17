@@ -174,7 +174,7 @@ Feature: Initialization
     Then the output should contain "success!!!!\n"
 
   Scenario: install gem
-    Given The default aruba timeout is 45 seconds
+    Given The default aruba timeout is 120 seconds
     Given a file named "test_repo.yml" with:
     """
     gem:
