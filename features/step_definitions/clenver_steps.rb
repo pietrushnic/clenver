@@ -28,3 +28,9 @@ Then(/^the following remote (?:uris|branches) should be connected in "(.*?)":$/)
     res.to_i.should eq(2)
   end
 end
+
+Then(/^the output should contain correct version$/) do
+    require 'clenver/version'
+    assert_partial_output(Clenver::VERSION, all_output)
+end
+
