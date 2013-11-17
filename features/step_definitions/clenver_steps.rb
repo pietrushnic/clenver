@@ -34,3 +34,8 @@ Then(/^the output should contain correct version$/) do
     assert_partial_output(Clenver::VERSION, all_output)
 end
 
+Then(/^the following absolute path should exist: "(.*?)"$/) do |arg1|
+  out = %x[echo #{arg1}].strip
+  File.should be_directory(out)
+end
+
