@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    clenver (0.1.12)
+    clenver (0.1.13)
       git (= 1.2.6)
       gli (= 2.8.0)
+      thor (= 0.18.1)
 
 GEM
   remote: https://rubygems.org/
