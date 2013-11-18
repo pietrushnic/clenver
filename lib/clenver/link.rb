@@ -7,8 +7,9 @@ class Link
   attr_accessor :src, :dst
   def initialize(src,dst)
     @src = src
-    @dst = expand_dst(dst)
+    @dst = dst
   end
+
   def create
     puts "Link.create"
     dst.each do |d|
@@ -26,13 +27,5 @@ class Link
         i += 1
       end
     end
-  end
-  def expand_dst(dst)
-    ret = Array.new()
-    dst.each do |d|
-      path = %x[ echo #{d}]
-      ret.push(path.strip)
-    end
-    ret
   end
 end
