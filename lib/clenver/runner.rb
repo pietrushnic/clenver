@@ -1,4 +1,4 @@
-require 'gli'
+require 'psych'
 require 'clenver'
 require 'clenver/project'
 require 'clenver/logging'
@@ -8,44 +8,57 @@ module Clenver
   class Runner
     include Logging
 
+    attr_accessor :path, :dst, :yaml
     def initialize(path, dst)
       @path = path
       @dst = dst
+      @yaml = parse_config
+    end
+
+    def parse_config
+      begin
+        Psych.load_file("#{path}")
+      rescue Psych::SyntaxError => ex
+        logger.error("#{path}: syntax error : #{ex.message}")
+        exit 1
+      end
+    end
+
+    def create_package_manager(type)
+      PackageManger.new(type, yaml[type].join(' '))
+    end
+
+    def create_repository(uri)
+      logger.debug("content:#{yaml[uri]}")
+      if yaml[uri].is_a?(Hash)
+        Repository.new(uri, yaml[uri])
+      else
+        Repository.new(uri)
+      end
     end
 
     def start
-      if File.exist?(@path)
-        begin
-          yaml = Psych.load_file("#{@path}")
-          logger.debug("yaml: #{yaml}")
-          #TODO: create test and fix this place with check for empty file
-          p = Project.new(File.basename("#{@path}", ".yml"), yaml, @dst)
-          pkgs = ""
-          unless yaml['apt'].nil?
-            for pkg in yaml['apt'] do
-              pkgs = pkgs + " " + pkg + " "
-            end
-            puts pkgs
-            p_mgr = PackageManger.new('apt', pkgs)
-            p_mgr.install()
+      #TODO: create test and fix this place with check for empty file
+      p = Project.new(File.basename("#{path}", ".yml"), yaml, dst)
+      if yaml.is_a?(Hash)
+        for k,v in yaml do
+          logger.info("key:#{k}")
+          logger.info("value:#{v}")
+          if k == 'apt' or k == 'gem'
+            p.pkg_mgr << create_package_manager(k)
           end
-          pkgs = ""
-          unless yaml['gem'].nil?
-            for pkg in yaml['gem'] do
-              pkgs = pkgs + " " + pkg + " "
-            end
-            puts pkgs
-            p_mgr = PackageManger.new('gem', pkgs)
-            p_mgr.install()
+          if k.match /(http|https|git).+/
+            p.repos << create_repository(k)
+            logger.debug("p.repos:#{p.repos}")
+            logger.debug("p.repos[0].content:#{p.repos[0].content}")
           end
-          p.create_repos
-          p.init_project
-        rescue Psych::SyntaxError => ex
-          exit_now!("#{@path}: syntax error : #{ex.message}", 1)
         end
       else
-        exit_now!("#{@path} no such file or directory", 2)
+        logger.error("#{path} is not a valid clenver configuration")
+        exit 2
       end
+      p.init
+      p.init_project
     end
   end
 end
