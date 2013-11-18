@@ -11,11 +11,11 @@ Feature: Initialization basics
     Given a file named "valid.yml" with:
     """
     https://github.com/pietrushnic/dummy.git:
-      links:
-        foobar.txt:
-        - foobar_link
-        foobar:
-        - foobar_dir_link
+    links:
+        dummy/foobar.txt:
+          - foobar_link
+        dummy/foobar:
+          - foobar_dir_link
     """
     When I run `clenver init valid.yml`
     Then the exit status should be 0

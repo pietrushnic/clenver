@@ -6,35 +6,39 @@ Feature: Initialization links
    Given The default aruba timeout is 10 seconds
    Given a file named "test_repo.yml" with:
    """
-   https://github.com/pietrushnic/dummy.git:
-     links:
-       foobar.txt:
-       - foobar_link
-       foobar:
-       - foobar_dir_link
+    https://github.com/pietrushnic/dummy.git:
+        dst:
+            - src/dummy
+    links:
+        src/dummy/foobar.txt:
+            - src/dummy/foobar_link
+        src/dummy/foobar:
+            - src/dummy/foobar_dir_link
    """
-   When I run `clenver init test_repo.yml some_tmp`
+   When I run `clenver init test_repo.yml`
    Then the following links should exist:
-     | some_tmp/test_repo/foobar_link     |
-     | some_tmp/test_repo/foobar_dir_link |
+     | src/dummy/foobar_link     |
+     | src/dummy/foobar_dir_link |
 
+  @announce
   Scenario: files backup verification
    Given The default aruba timeout is 10 seconds
    Given a file named "test_repo.yml" with:
    """
-   https://github.com/pietrushnic/dummy.git:
-     links:
-       foobar.txt:
-       - foobar_link
-       - foobar_link
-       foobar:
-       - foobar_dir_link
+    https://github.com/pietrushnic/dummy.git:
+    links:
+      dummy/foobar.txt:
+        - foobar_link
+        - foobar_link
+      dummy/foobar:
+        - foobar_dir_link
    """
-   When I run `clenver init test_repo.yml some_tmp`
+   When I run `clenver init test_repo.yml`
+   When I run `tree`
    Then the following links should exist:
-     | some_tmp/test_repo/foobar_link     |
-     | some_tmp/test_repo/foobar_link_old |
-     | some_tmp/test_repo/foobar_dir_link |
+     | foobar_link     |
+     | foobar_link_old |
+     | foobar_dir_link |
 
   Scenario: use system variable in path
    Given The default aruba timeout is 10 seconds

@@ -32,9 +32,9 @@ Feature: Initialization repository
     Given The default aruba timeout is 120 seconds
     Given a file named "test_repo.yml" with:
     """
-    gem:
-      - tmuxinator
-    https://github.com/pietrushnic/dummy.git:
+      gem:
+        - tmuxinator
+      https://github.com/pietrushnic/dummy.git:
       run:
         - echo "success!!!!"
     """
