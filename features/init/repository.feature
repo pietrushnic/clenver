@@ -11,8 +11,8 @@ Feature: Initialization repository
         upstream:
         - https://github.com/spf13/spf13-vim.git
     """
-    When I run `clenver init test_repo.yml some_tmp`
-    Then the following remote uris should be connected in "some_tmp/test_repo/spf13-vim":
+    When I run `clenver init test_repo.yml`
+    Then the following remote uris should be connected in "spf13-vim":
       | https://github.com/spf13/spf13-vim.git |
 
   Scenario: Connect remote and check its name
@@ -24,8 +24,8 @@ Feature: Initialization repository
         upstream:
         - https://github.com/spf13/spf13-vim.git
     """
-    When I run `clenver init test_repo.yml some_tmp`
-    Then the following remote branches should be connected in "some_tmp/test_repo/spf13-vim":
+    When I run `clenver init test_repo.yml`
+    Then the following remote branches should be connected in "spf13-vim":
       | upstream |
 
   @wip

@@ -8,8 +8,8 @@ Feature: Initialization
     """
     https://github.com/pietrushnic/dummy.git:
     """
-    When I run `clenver init test_repo.yml some_tmp`
+    When I run `clenver init test_repo.yml`
     Then the following files should exist:
-      | some_tmp/test_repo/dummy/README.md |
+      | dummy/README.md |
 
 

@@ -41,7 +41,7 @@ Feature: Initialization basics
     """
     When I run `clenver init test_repo.yml`
     Then the following files should exist:
-      | test_repo/dummy/README.md |
+      | dummy/README.md |
 
   Scenario: Init simple project (repo w/o colon)
     Given The default aruba timeout is 10 seconds
@@ -50,5 +50,4 @@ Feature: Initialization basics
     https://github.com/pietrushnic/dummy.git
     """
     When I run `clenver init test_repo.yml`
-    Then the following files should exist:
-      | test_repo/dummy/README.md |
+    Then the exit status should be 2
