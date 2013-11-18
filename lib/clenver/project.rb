@@ -4,10 +4,12 @@ require 'clenver/logging'
 
 class Project
   include Logging
-  attr_accessor :name, :repos, :dst, :abs_path
-  def initialize(name, repos, dst)
+  attr_accessor :name, :repos, :dst, :abs_path, :pkg_mgr, :yaml
+  def initialize(name, yaml, dst)
     @name = name
-    @repos = repos
+    @yaml = yaml
+    @repos = []
+    @pkg_mgr = []
     @dst = dst
     @abs_path = Dir::pwd + "/" + @name
   end
@@ -23,45 +25,27 @@ class Project
     Dir::chdir(path)
   end
 
-  def create_repos(dst=nil)
-    logger.debug("create_repos:")
-    goto_dst
-    case @repos
-    when Hash
-      @repos.each do |uri, content|
-        #TODO: verify if r is a supported repo
-        if uri == 'apt' or uri == 'gem'
-          next
-        end
-        begin
-          r = Repository.new(uri, dst)
-          r.clone
-          @repos[uri]['object'] = r
-        rescue Exception => msg
-          puts msg
-        end
-      end
-    when String
-      begin
-        repo = Repository.new(@repos, dst)
-        repo.clone
-      rescue Exception => msg
-        puts msg
-      end
+  def init
+    for r in repos do
+      logger.debug("repo:#{r.repo_uri}")
+      r.clone
+    end
+    for p in pkg_mgr do
+      p.install
     end
   end
 
   def init_project
     logger.debug("init_project:")
-    case @repos
+    case @yaml
     when Hash
       init_links
       init_repos
       init_runs
     when String
       begin
-        unless @repos.nil?
-          @repos['links'].each do |s,d|
+        unless @yaml.nil?
+          @yaml['links'].each do |s,d|
             Link.new(s,d).create
           end
         end
@@ -72,61 +56,49 @@ class Project
   end
 
   def init_links
-    @repos.each do |uri, content|
-      begin
-        unless content.nil?
-          #links
-          unless content['links'].nil?
-            content['links'].each do |s,d|
-              if /\$\w+/.match(s)
-                #TODO: this is ugly and should be fixed
-                buf = Array.new().push(s)
-                s_path = Link.new(s,d).expand_dst(buf)[0]
-              elsif
-                s_path = content['object'].get_abs_path + "/" + s
-              end
-              Link.new(s_path,d).create
-            end
+    logger.debug("init_links")
+    @yaml.each do |uri, content|
+      if content.is_a?(Hash)
+        #links
+        unless content['links'].nil?
+          content['links'].each do |s,d|
+            #TODO: this is ugly and should be fixed
+            buf = Array.new().push(s)
+            s_path = Link.new(s,d).expand_dst(buf)[0]
+            Link.new(s_path,d).create
           end
         end
-      rescue Exception => msg
-        puts msg
       end
     end
   end
 
   def init_repos
-    @repos.each do |uri, content|
-      begin
-        unless content.nil?
-          #remotes
-          unless content['remotes'].nil?
-            content['remotes'].each do |name, uri|
-              Dir::chdir(content['object'].get_abs_path)
-              content['object'].add_remote(name, uri)
-            end
+    logger.debug("init_yaml")
+    repos.each do |r|
+      logger.debug("r:#{r}")
+      if r.content.is_a?(Hash)
+        #remotes
+        logger.debug("content:#{r.content}")
+        unless r.content['remotes'].nil?
+          logger.debug("r.content:#{r.content['remotes']}")
+          r.content['remotes'].each do |name, uri|
+            r.add_remote(name, uri)
           end
         end
-      rescue Exception => msg
-        puts msg
       end
     end
   end
 
   def init_runs
-    @repos.each do |uri, content|
-      begin
-        unless content.nil?
-          #run
-          unless content['run'].nil?
-            content['run'].each do |cmd|
-              Dir::chdir(content['object'].get_abs_path)
-              puts %x[#{cmd}]
-            end
+    logger.debug("init_runs")
+    @yaml.each do |uri, content|
+      if content.is_a?(Hash)
+        #run
+        unless content['run'].nil?
+          content['run'].each do |cmd|
+            puts %x[#{cmd}]
           end
         end
-      rescue Exception => msg
-        puts msg
       end
     end
   end
