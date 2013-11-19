@@ -3,6 +3,7 @@ require 'clenver'
 require 'clenver/project'
 require 'clenver/logging'
 require 'clenver/package_manager'
+require 'clenver/command_executor'
 
 module Clenver
   class Runner
@@ -37,6 +38,22 @@ module Clenver
       end
     end
 
+    def create_links
+      l = []
+      for src, links in yaml['links']
+        l << Link.new(src, links)
+      end
+      return l
+    end
+
+    def create_cmd_exec
+      e = []
+      for c in yaml['run']
+        e <<  CommandExecutor.new(c)
+      end
+      return e
+    end
+
     def start
       #TODO: create test and fix this place with check for empty file
       p = Project.new(File.basename("#{path}", ".yml"), yaml, dst)
@@ -50,7 +67,12 @@ module Clenver
           if k.match /(http|https|git).+/
             p.repos << create_repository(k)
             logger.debug("p.repos:#{p.repos}")
-            logger.debug("p.repos[0].content:#{p.repos[0].content}")
+          end
+          if k == 'links'
+            p.links = create_links
+          end
+          if k == 'run'
+            p.cmd_exec = create_cmd_exec
           end
         end
       else
@@ -58,7 +80,7 @@ module Clenver
         exit 2
       end
       p.init
-      p.init_project
+      #p.init_project
     end
   end
 end
