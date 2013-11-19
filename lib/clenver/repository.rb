@@ -3,27 +3,48 @@ require 'clenver/logging'
 
 class Repository
   include Logging
-  attr_accessor :repo_uri, :content, :repo, :dst
-  def initialize(uri, content = nil, dst = Dir::pwd)
+  attr_accessor :repo_uri, :config, :repo, :dst, :remotes
+  #TODO: think about better way to handle dst from URI
+  def initialize(uri, config = nil)
     @repo_uri = uri
-    @dst = dst
+    @dst = get_dst(config)
+    @remotes = get_remotes(config)
     @abs_path = nil
     @repo = nil
-    @content = content
+  end
+
+  def get_remotes(config)
+    unless config.nil?
+      if config.has_key?('remotes')
+        config['remotes']
+      end
+    end
+  end
+
+  def get_dst(config)
+    unless config.nil?
+      if config.has_key?('dst')
+        return config['dst'][0]
+      end
+    end
+    Dir::pwd + "/" + File.basename(repo_uri, '.git')
   end
 
   def clone
-    repo_basename = File.basename("#{repo_uri}",".git")
-    repo = Git.clone(repo_uri, repo_basename)
+    repo = Git.clone(repo_uri, dst)
     logger.debug("clone:#{repo}")
-    @abs_path = Dir::pwd + "/" + repo_basename
   end
 
   def get_abs_path
     @abs_path
   end
-  def add_remote(name, uri)
+
+  def add_remotes
     logger.debug("self.inspect:#{self.inspect}")
-    Git.open(@abs_path).add_remote(name, uri)
+    unless remotes.nil?
+      for name, uri in remotes do
+        Git.open(dst).add_remote(name, uri)
+      end
+    end
   end
 end

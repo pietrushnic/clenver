@@ -4,12 +4,14 @@ require 'clenver/logging'
 
 class Project
   include Logging
-  attr_accessor :name, :repos, :dst, :abs_path, :pkg_mgr, :yaml
+  attr_accessor :name, :repos, :dst, :abs_path, :pkg_mgr, :yaml, :links, :cmd_exec
   def initialize(name, yaml, dst)
     @name = name
     @yaml = yaml
     @repos = []
     @pkg_mgr = []
+    @links = []
+    @cmd_exec = []
     @dst = dst
     @abs_path = Dir::pwd + "/" + @name
   end
@@ -27,11 +29,21 @@ class Project
 
   def init
     for r in repos do
-      logger.debug("repo:#{r.repo_uri}")
+      logger.debug("clone repo:#{r.repo_uri}")
       r.clone
+      r.add_remotes
     end
     for p in pkg_mgr do
+      logger.debug("install packages: #{p.pkgs}")
       p.install
+    end
+    for l in links do
+      logger.debug("create link src: #{l.src} dst:#{l.dst}")
+      l.create
+    end
+    for c in cmd_exec do
+      logger.debug("execute: #{c.cmd}")
+      c.execute
     end
   end
 
