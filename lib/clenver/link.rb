@@ -23,7 +23,7 @@ class Link
         rescue SystemCallError
           FileUtils.mv(d, d + "_old")
         else
-          logge.debug("else")
+          logger.debug("else")
           break
         end
         i += 1
