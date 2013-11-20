@@ -88,6 +88,8 @@ init_custom () {
     bash_cmd "$home_v$nd_pt"
     ssh_cmd "source ~/.bash_profile; git clone https://github.com/pietrushnic/clenver_projects.git src/clenver_projects"
     bash_cmd "clenver init $home_v/src/clenver_projects/general.yml"
+    bash_cmd "clenver init $home_v/src/clenver_projects/oh-my-zsh.yml"
+    bash_cmd "clenver init $home_v/src/clenver_projects/spf13-vim.yml"
 }
 
 init_file () {
