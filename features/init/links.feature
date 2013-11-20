@@ -20,7 +20,6 @@ Feature: Initialization links
      | src/dummy/foobar_link     |
      | src/dummy/foobar_dir_link |
 
-  @announce
   Scenario: files backup verification
    Given The default aruba timeout is 10 seconds
    Given a file named "test_repo.yml" with:
@@ -34,7 +33,6 @@ Feature: Initialization links
         - foobar_dir_link
    """
    When I run `clenver init test_repo.yml`
-   When I run `tree`
    Then the following links should exist:
      | foobar_link     |
      | foobar_link_old |

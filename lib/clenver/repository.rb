@@ -9,7 +9,6 @@ class Repository
     @repo_uri = uri
     @dst = get_dst(config)
     @remotes = get_remotes(config)
-    @abs_path = nil
     @repo = nil
   end
 
@@ -34,10 +33,6 @@ class Repository
   def clone
     repo = Git.clone(repo_uri, dst)
     logger.debug("clone:#{repo}")
-  end
-
-  def get_abs_path
-    @abs_path
   end
 
   def add_remotes
