@@ -27,6 +27,7 @@ class Repository
         return config['dst'][0]
       end
     end
+    logger.debug("dst:#{Dir::pwd + "/" + File.basename(repo_uri, '.git')}")
     Dir::pwd + "/" + File.basename(repo_uri, '.git')
   end
 

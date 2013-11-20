@@ -66,7 +66,6 @@ module Clenver
           end
           if k.match /(http|https|git).+/
             p.repos << create_repository(k)
-            logger.debug("p.repos:#{p.repos}")
           end
           if k == 'links'
             p.links = create_links
