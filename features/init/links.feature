@@ -52,3 +52,8 @@ Feature: Initialization links
    When I run `clenver init test_repo.yml some_tmp`
    Then the following links should exist:
      | $HOME/foobar_link     |
+
+  @wip
+  Scenario: destination already exist
+  Scenario: destination not exist
+  Scenario: access denied

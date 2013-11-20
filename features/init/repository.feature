@@ -39,3 +39,20 @@ Feature: Initialization repository
     """
     When I run `clenver init test_repo.yml`
     Then the following absolute path should exist: "$HOME/abs_path_test/spf13-vim"
+
+  @wip
+  Scenario: destination already exist
+  Scenario: destination not exist
+  Scenario: access denied
+  Scenario: multiple destinations
+    Given The default aruba timeout is 25 seconds
+    Given a file named "test_repo.yml" with:
+    """
+    https://github.com/pietrushnic/spf13-vim.git:
+      dst:
+        - $HOME/abs_path_test/spf13-vim
+      dst:
+        - $HOME/abs_path_test/spf13-vim-1
+    """
+    When I run `clenver init test_repo.yml`
+    Then the following absolute path should exist: "$HOME/abs_path_test/spf13-vim"
