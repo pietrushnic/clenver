@@ -44,10 +44,10 @@ Feature: Initialization links
    Given The default aruba timeout is 10 seconds
    Given a file named "test_repo.yml" with:
    """
-   https://github.com/pietrushnic/dummy.git:
-     links:
-       $HOME/foobar.txt:
-       - $HOME/foobar_link
+    https://github.com/pietrushnic/dummy.git:
+    links:
+        $HOME/foobar.txt:
+            - $HOME/foobar_link
    """
    When I run `clenver init test_repo.yml some_tmp`
    Then the following links should exist:
