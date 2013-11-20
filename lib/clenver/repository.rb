@@ -24,7 +24,7 @@ class Repository
   def get_dst(config)
     unless config.nil?
       if config.has_key?('dst')
-        return config['dst'][0]
+        return config['dst'][0].gsub(/\$\w+/) {|m| ENV[m[1..-1]]}
       end
     end
     logger.debug("dst:#{Dir::pwd + "/" + File.basename(repo_uri, '.git')}")
