@@ -86,7 +86,7 @@ init_custom () {
         echo "nd_pt: $nd_pt"
     fi
     bash_cmd "$home_v$nd_pt"
-    ssh_cmd "git clone https://github.com/pietrushnic/clenver_projects.git src/clenver_projects"
+    ssh_cmd "source ~/.bash_profile; git clone https://github.com/pietrushnic/clenver_projects.git src/clenver_projects"
     bash_cmd "clenver init $home_v/src/clenver_projects/general.yml"
 }
 
