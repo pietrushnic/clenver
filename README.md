@@ -1,3 +1,5 @@
+###NOTE: I gave up this project after figuring out what I can get from already available open source [configuration management software](http://en.wikipedia.org/wiki/Comparison_of_open_source_configuration_management_software) like [puppet](https://github.com/puppetlabs/puppet)
+
 clenver
 =======
 [![Gem Version](https://badge.fury.io/rb/clenver.png)](http://badge.fury.io/rb/clenver) [![Build Status](https://travis-ci.org/pietrushnic/clenver.png?branch=master)](https://travis-ci.org/pietrushnic/clenver) [![Code Climate](https://codeclimate.com/github/pietrushnic/clenver.png)](https://codeclimate.com/github/pietrushnic/clenver) [![Coverage Status](https://coveralls.io/repos/pietrushnic/clenver/badge.png)](https://coveralls.io/r/pietrushnic/clenver)
